@@ -1,12 +1,13 @@
 package com.example.conectamobile;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,7 +17,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText emailField, passwordField;
     private Button loginButton, registerButton;
+    private ImageView musicButton;
     private FirebaseAuth auth;
+
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,21 @@ public class LoginActivity extends AppCompatActivity {
         passwordField = findViewById(R.id.passwordField);
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
+        musicButton = findViewById(R.id.musicButton);
+
+        // Configurar MediaPlayer para reproducir música
+        mediaPlayer = MediaPlayer.create(this, R.raw.miramermx); // Reemplaza 'sample_music' con tu archivo de música en /res/raw
+
+        // Botón para reproducir música
+        musicButton.setOnClickListener(v -> {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                Toast.makeText(this, "Música pausada", Toast.LENGTH_SHORT).show();
+            } else {
+                mediaPlayer.start();
+                Toast.makeText(this, "Reproduciendo música", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Botón para iniciar sesión
         loginButton.setOnClickListener(v -> {
@@ -55,17 +74,22 @@ public class LoginActivity extends AppCompatActivity {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Ingreso exitoso
                         FirebaseUser user = auth.getCurrentUser();
                         Toast.makeText(LoginActivity.this, "Bienvenido, " + user.getEmail(), Toast.LENGTH_SHORT).show();
-                        // Redirigir a la actividad de contactos
                         Intent intent = new Intent(LoginActivity.this, ContactsActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
-                        // Error en el inicio de sesión
                         Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
     }
 }

@@ -5,26 +5,43 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Imagen como botón central -->
+    <ImageView
+        android:id="@+id/musicButton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/cristianm"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Botón de música" />
+
+    <!-- Campo de Email -->
     <EditText
         android:id="@+id/emailField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="8dp" />
 
+    <!-- Campo de Password -->
     <EditText
         android:id="@+id/passwordField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:layout_marginBottom="16dp" />
 
+    <!-- Botón de Inicio de Sesión -->
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Iniciar Sesión" />
+        android:text="Iniciar Sesión"
+        android:layout_marginBottom="8dp" />
 
+    <!-- Botón de Registro -->
     <Button
         android:id="@+id/registerButton"
         android:layout_width="match_parent"
